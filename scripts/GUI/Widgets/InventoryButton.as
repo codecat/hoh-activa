@@ -58,6 +58,17 @@ class InventoryButton : SpriteButtonWidget
 	{
 		SpriteButtonWidget::DoDraw(sb, pos);
 
+		if (m_item !is null)
+		{
+			if (!m_enabled)
+				sb.EnableColorize(vec4(0, 0, 0, 1), vec4(0.125, 0.125, 0.125, 1), vec4(0.25, 0.25, 0.25, 1));
+
+			m_item.m_def.m_sprite.Draw(sb, pos + vec2(4, 4), g_menuTime);
+
+			if (!m_enabled)
+				sb.DisableColorize();
+		}
+
 		if (m_text !is null)
 		{
 			sb.DrawString(pos + vec2(
