@@ -16,6 +16,7 @@ class PLayerInventoryTab : PlayerMenuTab
 
 	void OnShow() override
 	{
+		ReloadList();
 	}
 
 	void ReloadList()
