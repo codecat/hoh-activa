@@ -60,6 +60,20 @@ namespace ActiveItems
 			item.OnGiven(m_record, amount);
 		}
 
+		void TakeItem(ActiveItem@ item, int amount = 1)
+		{
+			if (amount <= 0)
+				return;
+
+			item.m_amount -= amount;
+			if (item.m_amount <= 0)
+			{
+				int index = m_items.findByRef(item);
+				if (index != -1)
+					m_items.removeAt(index);
+			}
+		}
+
 		void Save(SValueBuilder@ builder)
 		{
 			builder.PushArray("items");

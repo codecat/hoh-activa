@@ -40,4 +40,13 @@ namespace ActiveItems
 			g_items.insertLast(newItemDef);
 		}
 	}
+
+	ActiveItems::SaveData@ GetLocalSaveData()
+	{
+		auto record = GetLocalPlayerRecord();
+		ActiveItems::SaveData@ saveData;
+		if (record.userdata.get("activeitems", @saveData))
+			return saveData;
+		return null;
+	}
 }

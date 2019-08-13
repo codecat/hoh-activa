@@ -8,13 +8,7 @@ namespace ActiveItemsHooks
 
 		string id = arg0.GetString();
 
-		ActiveItems::SaveData@ saveData;
-		if (!player.m_record.userdata.get("activeitems", @saveData))
-		{
-			PrintError("Couldn't get active items save data strcture!");
-			return;
-		}
-
+		auto saveData = ActiveItems::GetLocalSaveData();
 		saveData.GiveItem(id);
 	}
 
@@ -65,8 +59,8 @@ namespace ActiveItemsHooks
 	[Hook]
 	void PlayerRecordSave(PlayerRecord@ record, SValueBuilder &builder)
 	{
-		ActiveItems::SaveData@ saveData;
-		if (record.userdata.get("activeitems", @saveData))
+		auto saveData = ActiveItems::GetLocalSaveData();
+		if (saveData !is null)
 		{
 			builder.PushDictionary("activeitems");
 			saveData.Save(builder);

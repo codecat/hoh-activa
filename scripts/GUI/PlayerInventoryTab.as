@@ -21,14 +21,7 @@ class PLayerInventoryTab : PlayerMenuTab
 
 	void ReloadList()
 	{
-		auto record = GetLocalPlayerRecord();
-
-		ActiveItems::SaveData@ saveData;
-		if (!record.userdata.get("activeitems", @saveData))
-		{
-			PrintError("Unable to get active item save data!");
-			return;
-		}
+		auto saveData = ActiveItems::GetLocalSaveData();
 
 		m_wItemList.PauseScrolling();
 		m_wItemList.ClearChildren();
@@ -36,23 +29,55 @@ class PLayerInventoryTab : PlayerMenuTab
 		for (uint i = 0; i < saveData.m_items.length(); i++)
 		{
 			auto item = saveData.m_items[i];
+			auto itemDef = item.m_def;
 
 			auto wNewItem = cast<InventoryButton>(m_wItemTemplate.Clone());
 			wNewItem.SetID("");
 			wNewItem.m_visible = true;
 
 			wNewItem.SetItem(item);
+			wNewItem.m_func = "use-item " + itemDef.m_id;
 
 			m_wItemList.AddChild(wNewItem);
 		}
 
 		m_wItemList.ResumeScrolling();
+
+		m_widget.m_host.m_forceFocus = true;
 	}
 
 	bool OnFunc(Widget@ sender, string name) override
 	{
-		print("Inventory func: \"" + name + "\"");
-		// Return true if func was handled, otherwise return false
+		auto parse = name.split(" ");
+		if (parse[0] == "use-item")
+		{
+			string itemId = parse[1];
+			auto saveData = ActiveItems::GetLocalSaveData();
+			auto item = saveData.GetItem(itemId);
+			if (item is null)
+			{
+				PrintError("Item with ID \"" + itemId + "\" is not in inventory!");
+				return true;
+			}
+
+			auto player = GetLocalPlayer();
+			if (!item.CanUse(player))
+			{
+				PrintError("Item with ID \"" + itemId + "\" can not be used right now!");
+				return true;
+			}
+
+			if (!item.Use(player))
+			{
+				PrintError("Using item with ID \"" + itemId + "\" didn't work!");
+				return true;
+			}
+
+			saveData.TakeItem(item);
+
+			ReloadList();
+			return true;
+		}
 		return false;
 	}
 }
