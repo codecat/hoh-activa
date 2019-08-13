@@ -1,0 +1,21 @@
+<loader>ActiveItems::LoadActiveItems</loader>
+<array>
+	<dict>
+		<string name="id">firstaid</string>
+
+		<string name="name">First Aid Kit</string>
+		<string name="description">Heals you for 250 HP.</string>
+		<string name="quality">common</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>0 0 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">Heal</string>
+			<int name="heal">250</int>
+		</dict>
+	</dict>
+</array>
