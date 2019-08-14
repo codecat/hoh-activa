@@ -1,5 +1,7 @@
 class InventoryButton : SpriteButtonWidget
 {
+	PlayerInventoryTab@ m_tab;
+
 	BitmapFont@ m_font;
 	BitmapString@ m_text;
 
@@ -76,6 +78,14 @@ class InventoryButton : SpriteButtonWidget
 				m_height - 4 - m_text.GetHeight()
 			), m_text);
 		}
+	}
+
+	void OnMouseLeave(vec2 mousePos) override
+	{
+		if (m_buttonDown)
+			@m_tab.m_dragDropItem = m_item;
+
+		SpriteButtonWidget::OnMouseLeave(mousePos);
 	}
 }
 

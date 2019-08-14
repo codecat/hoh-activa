@@ -1,9 +1,11 @@
-class PLayerInventoryTab : PlayerMenuTab
+class PlayerInventoryTab : PlayerMenuTab
 {
 	ScrollableWidget@ m_wItemList;
 	Widget@ m_wItemTemplate;
 
-	PLayerInventoryTab()
+	ActiveItems::ActiveItem@ m_dragDropItem;
+
+	PlayerInventoryTab()
 	{
 		m_id = "inventory";
 	}
@@ -17,6 +19,11 @@ class PLayerInventoryTab : PlayerMenuTab
 	void OnShow() override
 	{
 		ReloadList();
+	}
+
+	void OnHidden() override
+	{
+		@m_dragDropItem = null;
 	}
 
 	void ReloadList()
@@ -34,6 +41,7 @@ class PLayerInventoryTab : PlayerMenuTab
 			auto wNewItem = cast<InventoryButton>(m_wItemTemplate.Clone());
 			wNewItem.SetID("");
 			wNewItem.m_visible = true;
+			@wNewItem.m_tab = this;
 
 			wNewItem.SetItem(item);
 			wNewItem.m_func = "use-item " + itemDef.m_id;
@@ -44,6 +52,30 @@ class PLayerInventoryTab : PlayerMenuTab
 		m_wItemList.ResumeScrolling();
 
 		m_widget.m_host.m_forceFocus = true;
+	}
+
+	void Update(int dt) override
+	{
+		auto mi = GetMenuInput();
+		if (!mi.Forward.Down)
+			@m_dragDropItem = null;
+	}
+
+	void Draw(SpriteBatch& sb, int idt) override
+	{
+		if (m_dragDropItem !is null)
+		{
+			auto itemDef = m_dragDropItem.m_def;
+			auto itemSprite = itemDef.m_sprite;
+
+			auto gm = cast<BaseGameMode>(g_gameMode);
+			vec2 dragMousePos = gm.m_mice[0].GetPos(idt);
+			dragMousePos /= gm.m_wndScale;
+			dragMousePos.x -= itemSprite.GetWidth() / 2;
+			dragMousePos.y -= itemSprite.GetHeight() / 2;
+
+			itemSprite.Draw(sb, dragMousePos, g_menuTime);
+		}
 	}
 
 	bool OnFunc(Widget@ sender, string name) override

@@ -9,7 +9,7 @@
 
 		<array name="icon">
 			<string>gui/activeitems.png</string>
-			<int>100</int><vec4>0 0 24 24</vec4>
+			<int>100</int><vec4>24 0 24 24</vec4>
 		</array>
 
 		<string name="class">ActiveItems::EffectItem</string>

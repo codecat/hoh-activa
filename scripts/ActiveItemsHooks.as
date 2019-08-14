@@ -15,7 +15,7 @@ namespace ActiveItemsHooks
 	[Hook]
 	void GameModeConstructor(Campaign@ campaign)
 	{
-		campaign.m_playerMenu.m_tabSystem.AddTab(PLayerInventoryTab(), campaign.m_guiBuilder);
+		campaign.m_playerMenu.m_tabSystem.AddTab(PlayerInventoryTab(), campaign.m_guiBuilder);
 
 		AddFunction("give_active_item", { cvar_type::String }, GiveActiveItemCFunc, cvar_flags::Cheat);
 	}
