@@ -33,11 +33,12 @@
 				<group id="list-hotbar" inner="true" anchor="0.5 0.5" flow="hbox" spacing="18" />
 
 				<!-- Hotbar template -->
-				<rect id="template-hotbar" visible="false" width="28" height="46" spriteset="gui/variable/bigwindow_borders.sval" color="#202a26FF" shadow="#0c120fFF" shadowsize="4">
-					<text id="number" font="gui/fonts/arial11.fnt" hint="number-low" anchor="0.5 0" offset="0 2" />
+				<hotbar-item id="template-hotbar" visible="false" width="28" height="46" spriteset="gui/variable/bigwindow_borders.sval" color="#202a26FF" shadow="#0c120fFF" shadowsize="4">
+					<text id="number" font="gui/fonts/arial11.fnt" anchor="0.5 0" offset="0 2" />
 					<rect offset="0 -26" anchor="0.5 1" width="24" height="3" spriteset="gui/variable/3pxbar_hor.sval" />
 					<sprite id="icon" src="item-empty" offset="0 -2" anchor="0.5 1" />
-				</rect>
+					<rect width="24" height="24" offset="0 -2" anchor="0.5 1" shadow="#0000007F" shadowsize="2" />
+				</hotbar-item>
 			</rect>
 		</rect>
 	</doc>

@@ -5,10 +5,14 @@ namespace ActiveItems
 		PlayerRecord@ m_record;
 
 		array<ActiveItem@> m_items;
+		array<ActiveItemDef@> m_hotbar;
 
 		SaveData(PlayerRecord@ record)
 		{
 			@m_record = record;
+
+			for (uint i = 0; i < 6; i++)
+				m_hotbar.insertLast(null);
 		}
 
 		ActiveItem@ GetItem(const string &in id)
@@ -74,6 +78,16 @@ namespace ActiveItems
 			}
 		}
 
+		void SetHotbar(int index, ActiveItemDef@ itemDef)
+		{
+			for (uint i = 0; i < m_hotbar.length(); i++)
+			{
+				if (m_hotbar[i] is itemDef)
+					@m_hotbar[i] = null;
+			}
+			@m_hotbar[index] = itemDef;
+		}
+
 		void Save(SValueBuilder@ builder)
 		{
 			builder.PushArray("items");
@@ -82,6 +96,17 @@ namespace ActiveItems
 				builder.PushDictionary();
 				m_items[i].Save(builder);
 				builder.PopDictionary();
+			}
+			builder.PopArray();
+
+			builder.PushArray("hotbar");
+			for (uint i = 0; i < m_hotbar.length(); i++)
+			{
+				auto itemDef = m_hotbar[i];
+				if (itemDef is null)
+					builder.PushInteger(0);
+				else
+					builder.PushInteger(int(itemDef.m_idHash));
 			}
 			builder.PopArray();
 		}
@@ -104,6 +129,26 @@ namespace ActiveItems
 					}
 
 					GiveItem(itemDef);
+				}
+			}
+
+			auto arrHotbar = GetParamArray(UnitPtr(), sv, "hotbar", false);
+			if (arrHotbar !is null)
+			{
+				for (int i = 0; i < min(6, arrHotbar.length()); i++)
+				{
+					uint idHash = uint(arrHotbar[i].GetInteger());
+					if (idHash == 0)
+						continue;
+
+					auto itemDef = GetActiveItem(idHash);
+					if (itemDef is null)
+					{
+						PrintError("Unable to find active item definition for ID " + idHash + " for hotbar!");
+						continue;
+					}
+
+					@m_hotbar[i] = itemDef;
 				}
 			}
 		}

@@ -54,6 +54,7 @@ namespace ActiveItemsHooks
 	void LoadWidgetProducers(GUIBuilder@ builder)
 	{
 		builder.AddWidgetProducer("inventory-button", LoadInventoryButtonWidget);
+		builder.AddWidgetProducer("hotbar-item", LoadHotbarItemWidget);
 	}
 
 	[Hook]
