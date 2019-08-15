@@ -31,26 +31,26 @@ namespace ActiveItems
 			return null;
 		}
 
-		void GiveItem(const string &in id, int amount = 1)
+		ActiveItem@ GiveItem(const string &in id, int amount = 1)
 		{
-			GiveItem(HashString(id), amount);
+			return GiveItem(HashString(id), amount);
 		}
 
-		void GiveItem(uint idHash, int amount = 1)
+		ActiveItem@ GiveItem(uint idHash, int amount = 1)
 		{
 			auto itemDef = GetActiveItem(idHash);
 			if (itemDef is null)
 			{
 				PrintError("Unable to give item with hash " + idHash + ", it was not found!");
-				return;
+				return null;
 			}
-			GiveItem(itemDef, amount);
+			return GiveItem(itemDef, amount);
 		}
 
-		void GiveItem(ActiveItemDef@ def, int amount = 1)
+		ActiveItem@ GiveItem(ActiveItemDef@ def, int amount = 1)
 		{
 			if (amount <= 0)
-				return;
+				return null;
 
 			auto item = GetItem(def.m_idHash);
 			if (item is null)
@@ -62,6 +62,8 @@ namespace ActiveItems
 
 			item.m_amount += amount;
 			item.OnGiven(m_record, amount);
+
+			return item;
 		}
 
 		void TakeItem(ActiveItem@ item, int amount = 1)
@@ -171,7 +173,9 @@ namespace ActiveItems
 						continue;
 					}
 
-					GiveItem(itemDef);
+					auto newItem = GiveItem(itemDef);
+					if (newItem !is null)
+						newItem.Load(svItem);
 				}
 			}
 
