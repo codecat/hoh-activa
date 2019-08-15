@@ -139,28 +139,9 @@ class PlayerInventoryTab : PlayerMenuTab
 		if (parse[0] == "use-item")
 		{
 			string itemId = parse[1];
+
 			auto saveData = ActiveItems::GetLocalSaveData();
-			auto item = saveData.GetItem(itemId);
-			if (item is null)
-			{
-				PrintError("Item with ID \"" + itemId + "\" is not in inventory!");
-				return true;
-			}
-
-			auto player = GetLocalPlayer();
-			if (!item.CanUse(player))
-			{
-				PrintError("Item with ID \"" + itemId + "\" can not be used right now!");
-				return true;
-			}
-
-			if (!item.Use(player))
-			{
-				PrintError("Using item with ID \"" + itemId + "\" didn't work!");
-				return true;
-			}
-
-			saveData.TakeItem(item);
+			saveData.ConsumeItem(itemId);
 
 			ReloadList();
 			return true;

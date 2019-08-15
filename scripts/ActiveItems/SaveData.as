@@ -78,6 +78,43 @@ namespace ActiveItems
 			}
 		}
 
+		bool ConsumeItem(const string &in id)
+		{
+			auto item = GetItem(id);
+			if (item is null)
+			{
+				PrintError("Item with ID \"" + id + "\" is not in inventory!");
+				return true;
+			}
+			return ConsumeItem(item);
+		}
+
+		bool ConsumeItem(ActiveItem@ item)
+		{
+			auto player = cast<Player>(m_record.actor);
+			if (player is null)
+			{
+				//TODO: It would be cool to have a revive item.. maybe?
+				PrintError("Item with ID \"" + item.m_def.m_id + "\" can not be used because player is dead!");
+				return false;
+			}
+
+			if (!item.CanUse(player))
+			{
+				PrintError("Item with ID \"" + item.m_def.m_id + "\" can not be used right now!");
+				return false;
+			}
+
+			if (!item.Use(player))
+			{
+				PrintError("Using item with ID \"" + item.m_def.m_id + "\" didn't work!");
+				return false;
+			}
+
+			TakeItem(item);
+			return true;
+		}
+
 		void SetHotbar(int index, ActiveItemDef@ itemDef)
 		{
 			for (uint i = 0; i < m_hotbar.length(); i++)
