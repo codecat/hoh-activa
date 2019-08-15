@@ -2,13 +2,13 @@ namespace ActiveItems
 {
 	class EffectItem : ActiveItem
 	{
-		array<IEffect@> m_effects;
+		array<IEffect@>@ m_effects;
 
 		EffectItem(SValue& params)
 		{
 			super(params);
 
-			m_effects = LoadEffects(UnitPtr(), params);
+			@m_effects = LoadEffects(UnitPtr(), params);
 		}
 
 		bool CanUse(Player@ player) override
