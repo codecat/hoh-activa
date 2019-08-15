@@ -68,15 +68,17 @@ class PlayerInventoryTab : PlayerMenuTab
 			wNewHotbarItem.SetID("");
 			wNewHotbarItem.m_visible = true;
 
-			wNewHotbarItem.m_hotbarIndex = i;
+			wNewHotbarItem.SetHotbarIndex(i);
 
 			if (itemDef !is null)
 			{
+				@wNewHotbarItem.m_item = saveData.GetItem(itemDef.m_idHash);
+
 				wNewHotbarItem.m_tooltipTitle = "\\c" + GetItemQualityColorString(itemDef.m_quality) + Resources::GetString(itemDef.m_name);
 				wNewHotbarItem.m_tooltipText = Resources::GetString(itemDef.m_description);
 			}
 
-			auto wNum = cast<TextWidget>(wNewHotbarItem.GetWidgetById("num"));
+			auto wNum = cast<TextWidget>(wNewHotbarItem.GetWidgetById("number"));
 			if (wNum !is null)
 				wNum.SetText("" + (i + 1));
 
@@ -106,6 +108,7 @@ class PlayerInventoryTab : PlayerMenuTab
 				auto saveData = ActiveItems::GetLocalSaveData();
 				saveData.SetHotbar(wHotbarItem.m_hotbarIndex, m_dragDropItem.m_def);
 				ReloadList();
+				ActiveItemsHooks::g_hotbarHUD.ReloadList();
 			}
 		}
 

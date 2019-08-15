@@ -1,5 +1,7 @@
 namespace ActiveItemsHooks
 {
+	HotbarHUD@ g_hotbarHUD;
+
 	void GiveActiveItemCFunc(cvar_t@ arg0)
 	{
 		auto player = GetLocalPlayer();
@@ -17,7 +19,22 @@ namespace ActiveItemsHooks
 	{
 		campaign.m_playerMenu.m_tabSystem.AddTab(PlayerInventoryTab(), campaign.m_guiBuilder);
 
+		@g_hotbarHUD = HotbarHUD(campaign.m_guiBuilder);
+		g_hotbarHUD.Initialize();
+
 		AddFunction("give_active_item", { cvar_type::String }, GiveActiveItemCFunc, cvar_flags::Cheat);
+	}
+
+	[Hook]
+	void GameModeUpdateWidgets(Campaign@ campaign, int dt, GameInput& gameInput, MenuInput& menuInput)
+	{
+		g_hotbarHUD.Update(dt);
+	}
+
+	[Hook]
+	void GameModeRenderWidgets(Campaign@ campaign, PlayerRecord@ player, int idt, SpriteBatch& sb)
+	{
+		g_hotbarHUD.Draw(sb, idt);
 	}
 
 	[Hook]
@@ -82,5 +99,8 @@ namespace ActiveItemsHooks
 		auto svActiveItems = sval.GetDictionaryEntry("activeitems");
 		if (svActiveItems !is null)
 			saveData.Load(svActiveItems);
+
+		if (record.local)
+			g_hotbarHUD.ReloadList();
 	}
 }
