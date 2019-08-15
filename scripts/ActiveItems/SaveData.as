@@ -99,6 +99,12 @@ namespace ActiveItems
 				return false;
 			}
 
+			if (item.m_amount <= 0)
+			{
+				PrintError("Item with ID \"" + item.m_def.m_id + "\" can not be used because there are none left in inventory!");
+				return false;
+			}
+
 			if (!item.CanUse(player))
 			{
 				PrintError("Item with ID \"" + item.m_def.m_id + "\" can not be used right now!");

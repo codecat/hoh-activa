@@ -26,6 +26,31 @@ namespace ActiveItemsHooks
 	}
 
 	[Hook]
+	void GameModeUpdate(Campaign@ campaign, int dt, GameInput& gameInput, MenuInput& menuInput)
+	{
+		auto saveData = ActiveItems::GetLocalSaveData();
+		for (uint i = 0; i < saveData.m_hotbar.length(); i++)
+		{
+			auto bs = Platform::GetKeyState(DefinedKey(int(DefinedKey::D1) + i));
+			if (!bs.Pressed)
+				continue;
+
+			auto itemDef = saveData.m_hotbar[i];
+			if (itemDef is null)
+				continue;
+
+			auto item = saveData.GetItem(itemDef.m_idHash);
+			if (item is null)
+			{
+				//TODO: Some notification that there's no more items of this type in inventory?
+				continue;
+			}
+
+			saveData.ConsumeItem(item);
+		}
+	}
+
+	[Hook]
 	void GameModeUpdateWidgets(Campaign@ campaign, int dt, GameInput& gameInput, MenuInput& menuInput)
 	{
 		g_hotbarHUD.Update(dt);

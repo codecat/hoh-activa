@@ -47,8 +47,6 @@ class HotbarHUD : IWidgetHoster
 
 			if (itemDef !is null)
 			{
-				@wNewItem.m_item = saveData.GetItem(itemDef.m_idHash);
-
 				auto wIcon = cast<SpriteWidget>(wNewItem.GetWidgetById("icon"));
 				if (wIcon !is null)
 					wIcon.SetSprite(itemDef.m_sprite);

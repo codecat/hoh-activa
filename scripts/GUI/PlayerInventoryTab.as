@@ -72,8 +72,6 @@ class PlayerInventoryTab : PlayerMenuTab
 
 			if (itemDef !is null)
 			{
-				@wNewHotbarItem.m_item = saveData.GetItem(itemDef.m_idHash);
-
 				wNewHotbarItem.m_tooltipTitle = "\\c" + GetItemQualityColorString(itemDef.m_quality) + Resources::GetString(itemDef.m_name);
 				wNewHotbarItem.m_tooltipText = Resources::GetString(itemDef.m_description);
 			}

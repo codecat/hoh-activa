@@ -2,9 +2,6 @@ class HotbarItemWidget : RectWidget
 {
 	int m_hotbarIndex = -1;
 
-	//NOTE: Can be null!
-	ActiveItems::ActiveItem@ m_item;
-
 	TextWidget@ m_wAmount;
 
 	HotbarItemWidget()
@@ -21,11 +18,26 @@ class HotbarItemWidget : RectWidget
 
 	void RefreshItemData()
 	{
+		if (m_hotbarIndex == -1)
+			return;
+
+		auto saveData = ActiveItems::GetLocalSaveData();
+		auto itemDef = saveData.m_hotbar[m_hotbarIndex];
+		ActiveItems::ActiveItem@ item = (itemDef is null ? null : saveData.GetItem(itemDef.m_idHash));
+
 		if (m_wAmount !is null)
 		{
-			m_wAmount.m_visible = (m_item !is null);
-			if (m_item !is null)
-				m_wAmount.SetText(formatThousands(m_item.m_amount));
+			m_wAmount.m_visible = (item !is null);
+			if (item !is null)
+			{
+				m_wAmount.SetText(formatThousands(item.m_amount));
+				m_wAmount.SetColor(vec4(1, 1, 1, 1));
+			}
+			else
+			{
+				m_wAmount.SetText("0");
+				m_wAmount.SetColor(vec4(1, 0, 0, 1));
+			}
 		}
 	}
 
