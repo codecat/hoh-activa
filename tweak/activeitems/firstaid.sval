@@ -1,0 +1,82 @@
+<loader>ActiveItems::LoadActiveItems</loader>
+<array>
+	<!-- Common -->
+	<dict>
+		<string name="id">firstaid</string>
+
+		<string name="name">First Aid Kit</string>
+		<string name="description">Heals for 250 HP.</string>
+		<string name="quality">common</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>24 0 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">Heal</string>
+			<int name="heal">250</int>
+		</dict>
+	</dict>
+
+	<!-- Uncommon -->
+	<dict>
+		<string name="id">firstaid-2</string>
+
+		<string name="name">First Aid Kit</string>
+		<string name="description">Heals for 500 HP.</string>
+		<string name="quality">uncommon</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>0 72 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">Heal</string>
+			<int name="heal">500</int>
+		</dict>
+	</dict>
+
+	<!-- Epic -->
+	<dict>
+		<string name="id">firstaid-3</string>
+
+		<string name="name">First Aid Kit</string>
+		<string name="description">Heals for 1000 HP.</string>
+		<string name="quality">epic</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>0 144 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">Heal</string>
+			<int name="heal">1000</int>
+		</dict>
+	</dict>
+
+	<!-- Legendary -->
+	<dict>
+		<string name="id">firstaid-4</string>
+
+		<string name="name">First Aid Kit</string>
+		<string name="description">Heals for 2000 HP.</string>
+		<string name="quality">legendary</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>0 192 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">Heal</string>
+			<int name="heal">2000</int>
+		</dict>
+	</dict>
+</array>

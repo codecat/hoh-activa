@@ -1,0 +1,42 @@
+<loader>ActiveItems::LoadActiveItems</loader>
+<array>
+	<!-- Common -->
+	<dict>
+		<string name="id">mana-potion</string>
+
+		<string name="name">Mana Potion</string>
+		<string name="description">Gives 250 mana.</string>
+		<string name="quality">common</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>48 0 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">GiveMana</string>
+			<int name="mana">250</int>
+		</dict>
+	</dict>
+
+	<!-- Uncommon -->
+	<dict>
+		<string name="id">mana-potion-2</string>
+
+		<string name="name">Mana Potion</string>
+		<string name="description">Gives 500 mana.</string>
+		<string name="quality">common</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>24 72 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">GiveMana</string>
+			<int name="mana">500</int>
+		</dict>
+	</dict>
+</array>

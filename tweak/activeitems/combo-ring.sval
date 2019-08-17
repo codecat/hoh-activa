@@ -1,0 +1,42 @@
+<loader>ActiveItems::LoadActiveItems</loader>
+<array>
+	<!-- Uncommon -->
+	<dict>
+		<string name="id">combo-ring</string>
+
+		<string name="name">Combo Ring</string>
+		<string name="description">Instantly gives the combo effect for 2 seconds.</string>
+		<string name="quality">uncommon</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>48 72 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">GiveCombo</string>
+			<int name="time">2000</int>
+		</dict>
+	</dict>
+
+	<!-- Epic -->
+	<dict>
+		<string name="id">combo-ring-2</string>
+
+		<string name="name">Combo Ring</string>
+		<string name="description">Instantly gives the combo effect for 5 seconds.</string>
+		<string name="quality">epic</string>
+
+		<array name="icon">
+			<string>gui/activeitems.png</string>
+			<int>100</int><vec4>24 144 24 24</vec4>
+		</array>
+
+		<string name="class">ActiveItems::EffectItem</string>
+		<dict name="effect">
+			<string name="class">GiveCombo</string>
+			<int name="time">5000</int>
+		</dict>
+	</dict>
+</array>
