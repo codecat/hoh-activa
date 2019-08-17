@@ -57,7 +57,7 @@ namespace ActiveItemsHooks
 	}
 
 	[Hook]
-	void GameModeRenderWidgets(Campaign@ campaign, PlayerRecord@ player, int idt, SpriteBatch& sb)
+	void GameModeRenderFrame(Campaign@ campaign, int idt, SpriteBatch& sb)
 	{
 		g_hotbarHUD.Draw(sb, idt);
 	}
